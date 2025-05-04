@@ -9,7 +9,7 @@
             </button>
             <button
                 className={props.gameStarted ? "button-on" : "button-off"}
-                onClick={() => {props.pickRandomIndex();}}
+                onClick={() => {props.reset();}}
                 style={{width: "8rem", height: "3rem", fontSize: "1.1rem" }}
             >RESET
             </button>

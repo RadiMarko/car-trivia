@@ -7,19 +7,44 @@
   user-select: none;
 }
 
+body {
+  align-items: baseline;
+}
+
 .game-area {
   display: flex;
   flex-direction: column;
+  margin: 1rem;
 }
 
-.score-counter {
+.score-counter-default {
   font-size: 2.5rem;
   margin-bottom: 0;
+  margin-top: 0;
+}
+
+.score-counter-correct {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: green;
+}
+
+.score-counter-wrong {
+  font-size: 2.5rem;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: red;
+}
+
+.logo-display {
+  border: 0.1rem solid black;
+  border-radius: 2rem;
 }
 
 .logo-image {
-  height: 15rem;
-  width: 15rem;
+  height: 12rem;
+  width: 12rem;
 }
 
 .game-buttons {
@@ -50,4 +75,8 @@
   width: 20rem;
   font-size: 1.1rem;
   padding-left: 1.2rem;
+}
+
+.message {
+  margin-bottom: 0.5rem;
 }

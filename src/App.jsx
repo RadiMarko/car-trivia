@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import {useEffect, useState} from 'react'
 import './App.css'
 import ScoreDisplay from "./Components/ScoreDisplay.jsx";
 import LogoDisplay from "./Components/LogoDisplay.jsx";
 import GameButtons from "./Components/GameButtons.jsx";
 import Input from "./Components/Input.jsx";
+import Footer from "./Components/Footer.jsx";
 
 function App() {
   
@@ -83,6 +83,9 @@ function App() {
   // VARIABLE OF SCORE
   const [scoreCounter, setScoreCounter] = useState(0);
   
+  // VARIABLE FOR SCORE DISPLAY CLASS (AS FEEDBACK FOR CORRECT OR INCORRECT ANSWER)
+  const [scoreClass, setScoreClass] = useState("score-counter-default");
+  
   // ARRAY OF LOGO IMAGE PATHS
   const [logoArray, setLogoArray] = useState([...initialArray]);
   
@@ -93,6 +96,13 @@ function App() {
     
   // FUNCTION FOR PICKING RANDOM LOGO AND REMOVING IT FROM THE ARRAY OF LOGOS, THEN SETTING LOGO STATE VARIABLE
   function pickRandomIndex() {
+      
+      // Check if logoArray is empty before picking a new logo, exiting function if it is
+      if (logoArray.length === 0) {
+          checkIfEmpty();
+          return;
+      }
+      
       setLogoArray((prevLogoArray) => {
           
           // Random number generator to pick logo by index
@@ -110,36 +120,50 @@ function App() {
           const cleanBrandName = selectedLogo.replace("/", "").replace(".jpg", "");
           setCorrectAnswer(cleanBrandName);
           
-          console.log(cleanBrandName);
-          
           return newLogoArray;
       })
   }
   
-  // FUNCTION FOR COMPARING USER INPUT TO CORRECT ANSWER AND INCREASING SCORE
+  // FUNCTION FOR COMPARING USER INPUT TO CORRECT ANSWER AND INCREASING SCORE, COLOR FEEDBACK DEPENDING ON RESULT
   function compareUserInput(userInput) {
-      console.log(userInput);
-      if (!correctAnswer) {
-          return;
-      }
-          
       if (userInput.trim().toLowerCase() === correctAnswer) {
-          alert(`correct! (you typed ${userInput}`)
           setScoreCounter((prevScoreCounter) => {
+              setScoreClass("score-counter-correct")
               prevScoreCounter = prevScoreCounter + 1;
               return prevScoreCounter;
           })
       } else {
-          alert(`incorrect (you typed ${userInput}. the correct answer was ${correctAnswer}`)
+          setScoreClass("score-counter-wrong")
+      }
+      
+      setTimeout(() => {
+          setScoreClass("score-counter-default");
+      }, 500);
+      
+      checkIfEmpty();
+  }
+  
+  // FUNCTION FOR RESETTING GAME
+  function reset() {
+      setGameStarted(false);
+      setLogoArray([...initialArray]);
+      setScoreCounter(0)
+  }
+
+  // FUNCTION FOR RESETTING GAME IF INPUT IS EMPTY
+  function checkIfEmpty() {
+      if (logoArray.length < 1) {
+          reset();
       }
   }
 
   return (
     <div className="game-area">
-      <ScoreDisplay scoreCounter={scoreCounter} array={logoArray}></ScoreDisplay>
+      <ScoreDisplay scoreCounter={scoreCounter} array={logoArray} scoreClass={scoreClass}></ScoreDisplay>
       <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
-      <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex}></GameButtons>
-      <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
+      <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
+      <Input gameStarted={gameStarted} onSubmit={compareUserInput} pickRandomIndex={pickRandomIndex}></Input>
+      <Footer gameStarted={gameStarted}></Footer>
     </div>
   )
 }

@@ -18,9 +18,14 @@ export default function Input(props) {
     }
     
     return (
-        <div class="input-section">
+        <div className="input-section">
             <input className="input-field" value={inputValue} onChange={handleChange} maxLength={18} placeholder="Type car brand name"></input>
-            <button style={{fontSize: "1.1rem"}} className={props.gameStarted ? "button-on" : "button-off"} onClick={handleClick}>ENTER</button>
+            <button style={{fontSize: "1.1rem"}}
+                    className={props.gameStarted ? "button-on" : "button-off"}
+                    onClick={() => {handleClick(); props.pickRandomIndex()}}
+                    disabled={inputValue.trim().length === 0}>
+                    ENTER
+            </button>
         </div>
     )
 }
