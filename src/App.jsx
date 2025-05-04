@@ -80,6 +80,9 @@ function App() {
   // VARIABLE OF CORRECT ANSWER
   const [correctAnswer, setCorrectAnswer] = useState();
   
+  // VARIABLE OF PREVIOUSLY CORRECT ANSWER
+  const [lastCorrectAnswer, setLastCorrectAnswer] = useState();
+  
   // VARIABLE OF SCORE
   const [scoreCounter, setScoreCounter] = useState(0);
   
@@ -117,7 +120,10 @@ function App() {
           setPickedLogo(selectedLogo);
           
           // Formating path strings, setting state of correct answer for upcoming comparison with user-typed answer
-          const cleanBrandName = selectedLogo.replace("/", "").replace(".jpg", "");
+          const cleanBrandName = selectedLogo
+              .replace("/", "")
+              .replace(".jpg", "")
+              .replace(/[-\s]/g, "");
           setCorrectAnswer(cleanBrandName);
           
           return newLogoArray;
@@ -126,7 +132,7 @@ function App() {
   
   // FUNCTION FOR COMPARING USER INPUT TO CORRECT ANSWER AND INCREASING SCORE, COLOR FEEDBACK DEPENDING ON RESULT
   function compareUserInput(userInput) {
-      if (userInput.trim().toLowerCase() === correctAnswer) {
+      if (userInput.trim().toLowerCase().replace(/[-\s]/g, "") === correctAnswer) {
           setScoreCounter((prevScoreCounter) => {
               setScoreClass("score-counter-correct")
               prevScoreCounter = prevScoreCounter + 1;
@@ -135,6 +141,8 @@ function App() {
       } else {
           setScoreClass("score-counter-wrong")
       }
+
+      setLastCorrectAnswer(correctAnswer);
       
       setTimeout(() => {
           setScoreClass("score-counter-default");
@@ -163,7 +171,7 @@ function App() {
       <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
       <Input gameStarted={gameStarted} onSubmit={compareUserInput} pickRandomIndex={pickRandomIndex}></Input>
-      <Footer gameStarted={gameStarted}></Footer>
+      <Footer test={pickRandomIndex} array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
     </div>
   )
 }
