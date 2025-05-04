@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import './App.css'
 import ScoreDisplay from "./Components/ScoreDisplay.jsx";
 import LogoDisplay from "./Components/LogoDisplay.jsx";
@@ -124,7 +124,7 @@ function App() {
               .replace("/", "")
               .replace(".jpg", "")
               .replace(/[-\s]/g, "");
-          setCorrectAnswer(cleanBrandName);
+              setCorrectAnswer(cleanBrandName);
           
           return newLogoArray;
       })
@@ -142,11 +142,26 @@ function App() {
           setScoreClass("score-counter-wrong")
       }
 
-      setLastCorrectAnswer(correctAnswer);
+      setLastCorrectAnswer(() => {
+          // Name to be displayed in the footer as previous answer
+          const displayName = pickedLogo
+              .replace("/", "")
+              .replace(".jpg", "")
+              .split(/[-\s]/g)
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(" ");
+          return displayName;
+      })
       
+      // Restoring original color after half a second
       setTimeout(() => {
           setScoreClass("score-counter-default");
       }, 500);
+      
+      // Delay picking the next logo a very little bit to ensure that the footer updates first
+      setTimeout(() => {
+          pickRandomIndex();
+      }, 100)
       
       checkIfEmpty();
   }
@@ -170,7 +185,7 @@ function App() {
       <ScoreDisplay scoreCounter={scoreCounter} array={logoArray} scoreClass={scoreClass}></ScoreDisplay>
       <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
-      <Input gameStarted={gameStarted} onSubmit={compareUserInput} pickRandomIndex={pickRandomIndex}></Input>
+      <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
       <Footer test={pickRandomIndex} array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
     </div>
   )
