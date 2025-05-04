@@ -1,5 +1,8 @@
 ﻿export default function ScoreDisplay(props) {
     return (
-        <p className="score-counter">Current score: {props.scoreCounter}</p>
+        <div>
+            <p className="score-counter">Current score: {props.scoreCounter}</p>
+            <h2 style={{marginTop: "0"}}>Remaining logos: {props.array.length}</h2>
+        </div>
     )
 }

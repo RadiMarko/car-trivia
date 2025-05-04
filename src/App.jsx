@@ -136,7 +136,7 @@ function App() {
 
   return (
     <div className="game-area">
-      <ScoreDisplay scoreCounter={scoreCounter}></ScoreDisplay>
+      <ScoreDisplay scoreCounter={scoreCounter} array={logoArray}></ScoreDisplay>
       <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex}></GameButtons>
       <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
