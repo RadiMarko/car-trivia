@@ -1,34 +1,146 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import ScoreDisplay from "./Components/ScoreDisplay.jsx";
+import LogoDisplay from "./Components/LogoDisplay.jsx";
+import GameButtons from "./Components/GameButtons.jsx";
+import Input from "./Components/Input.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const initialArray = [
+      "/abarth.jpg",
+      "/acura.jpg",
+      "/alfa romeo.jpg",
+      "/alpina.jpg",
+      "/aston martin.jpg",
+      "/audi.jpg",
+      "/bentley.jpg",
+      "/bmw.jpg",
+      "/bugatti.jpg",
+      "/cadillac.jpg",
+      "/chevrolet.jpg",
+      "/chevrolet corvette.jpg",
+      "/chrysler.jpg",
+      "/citroen.jpg",
+      "/dacia.jpg",
+      "/daewoo.jpg",
+      "/ferrari.jpg",
+      "/fiat.jpg",
+      "/ford.jpg",
+      "/ford mustang.jpg",
+      "/honda.jpg",
+      "/hyundai.jpg",
+      "/infiniti.jpg",
+      "/jaguar.jpg",
+      "/koenigsegg.jpg",
+      "/lada.jpg",
+      "/lamborghini.jpg",
+      "/lancia.jpg",
+      "/land rover.jpg",
+      "/lexus.jpg",
+      "/lincoln.jpg",
+      "/lotus.jpg",
+      "/maserati.jpg",
+      "/maybach.jpg",
+      "/mazda.jpg",
+      "/mercedes-benz.jpg",
+      "/mini.jpg",
+      "/mitsubishi.jpg",
+      "/nissan.jpg",
+      "/opel.jpg",
+      "/pagani.jpg",
+      "/peugeot.jpg",
+      "/polestar.jpg",
+      "/pontiac.jpg",
+      "/porsche.jpg",
+      "/renault.jpg",
+      "/rolls-royce.jpg",
+      "/rover.jpg",
+      "/scania.jpg",
+      "/seat.jpg",
+      "/skoda.jpg",
+      "/smart.jpg",
+      "/ssangyong.jpg",
+      "/subaru.jpg",
+      "/suzuki.jpg",
+      "/tesla.jpg",
+      "/toyota.jpg",
+      "/vauxhall.jpg",
+      "/volkswagen.jpg",
+      "/volvo.jpg"
+  ]
+    
+  // VARIABLE OF GAME STATUS
+  const [gameStarted, setGameStarted] = useState(false);  
+  
+  // VARIABLE OF CURRENTLY PICKED LOGO
+  const [pickedLogo, setPickedLogo] = useState();
+  
+  // VARIABLE OF CORRECT ANSWER
+  const [correctAnswer, setCorrectAnswer] = useState();
+  
+  // VARIABLE OF SCORE
+  const [scoreCounter, setScoreCounter] = useState(0);
+  
+  // ARRAY OF LOGO IMAGE PATHS
+  const [logoArray, setLogoArray] = useState([...initialArray]);
+  
+  // FUNCTION FOR STARTING GAME
+  function startGame() {
+      setGameStarted(true);
+  }  
+    
+  // FUNCTION FOR PICKING RANDOM LOGO AND REMOVING IT FROM THE ARRAY OF LOGOS, THEN SETTING LOGO STATE VARIABLE
+  function pickRandomIndex() {
+      setLogoArray((prevLogoArray) => {
+          
+          // Random number generator to pick logo by index
+          const randomIndex = Math.floor(Math.random() * prevLogoArray.length);
+          const selectedLogo = prevLogoArray[randomIndex];
+          
+          // Removing selected logo from the array
+          const newLogoArray = [...prevLogoArray];
+          newLogoArray.splice(randomIndex, 1);
+          
+          // Setting state of currently selected logo
+          setPickedLogo(selectedLogo);
+          
+          // Formating path strings, setting state of correct answer for upcoming comparison with user-typed answer
+          const cleanBrandName = selectedLogo.replace("/", "").replace(".jpg", "");
+          setCorrectAnswer(cleanBrandName);
+          
+          console.log(cleanBrandName);
+          
+          return newLogoArray;
+      })
+  }
+  
+  // FUNCTION FOR COMPARING USER INPUT TO CORRECT ANSWER AND INCREASING SCORE
+  function compareUserInput(userInput) {
+      console.log(userInput);
+      if (!correctAnswer) {
+          return;
+      }
+          
+      if (userInput.trim().toLowerCase() === correctAnswer) {
+          alert(`correct! (you typed ${userInput}`)
+          setScoreCounter((prevScoreCounter) => {
+              prevScoreCounter = prevScoreCounter + 1;
+              return prevScoreCounter;
+          })
+      } else {
+          alert(`incorrect (you typed ${userInput}. the correct answer was ${correctAnswer}`)
+      }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="game-area">
+      <ScoreDisplay scoreCounter={scoreCounter}></ScoreDisplay>
+      <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
+      <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex}></GameButtons>
+      <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
+    </div>
   )
 }
 
