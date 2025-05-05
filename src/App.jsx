@@ -5,6 +5,7 @@ import LogoDisplay from "./Components/LogoDisplay.jsx";
 import GameButtons from "./Components/GameButtons.jsx";
 import Input from "./Components/Input.jsx";
 import Footer from "./Components/Footer.jsx";
+import Modal from "./Components/Modal.jsx";
 
 function App() {
   
@@ -89,6 +90,9 @@ function App() {
   // VARIABLE FOR SCORE DISPLAY CLASS (AS FEEDBACK FOR CORRECT OR INCORRECT ANSWER)
   const [scoreClass, setScoreClass] = useState("score-counter-default");
   
+  // VARIABLE FOR DISPLAYING MODAL
+  const [modalDisplayed, setModalDisplayed] = useState(false);
+  
   // ARRAY OF LOGO IMAGE PATHS
   const [logoArray, setLogoArray] = useState([...initialArray]);
   
@@ -172,10 +176,16 @@ function App() {
       setLogoArray([...initialArray]);
       setScoreCounter(0)
   }
+  
+  // FUNCTION FOR TOGGLING MODAL
+  function toggleModal() {
+      setModalDisplayed(!modalDisplayed);
+  }
 
   // FUNCTION FOR RESETTING GAME IF INPUT IS EMPTY
   function checkIfEmpty() {
       if (logoArray.length < 1) {
+          toggleModal()
           reset();
       }
   }
@@ -187,6 +197,7 @@ function App() {
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
       <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
       <Footer test={pickRandomIndex} array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
+      <Modal modalDisplayed={modalDisplayed} toggleModal={toggleModal}></Modal>
     </div>
   )
 }
