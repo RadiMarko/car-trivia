@@ -97,9 +97,10 @@ body {
   position: fixed;
   top: 8%;
   z-index: 2;
-  width: 25rem;
+  width: 30rem;
   height: 25rem;
-  background-color: gray;
+  background-color: #6a6a6a;
+  color: white;
   border-radius: 2rem;
 }
 

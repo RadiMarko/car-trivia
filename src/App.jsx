@@ -206,7 +206,7 @@ function App() {
       <LogoDisplay displayedLogo={logoArray.length === 60 ? "/default.jpg" : pickedLogo}></LogoDisplay>
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
       <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
-      <Footer test={pickRandomIndex} array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
+      <Footer array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
       <Modal modalDisplayed={modalDisplayed} toggleModal={toggleModal} reset={reset} score={scoreCounter} array={initialArray}></Modal>
     </div>
   )
