@@ -5,6 +5,7 @@
   text-align: center;
   color: black;
   user-select: none;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -14,7 +15,7 @@ body {
 .game-area {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  padding: 1rem;
 }
 
 .score-counter-default {
@@ -66,10 +67,22 @@ body {
   color: white;
 }
 
+.reset-button-on {
+  background-color: #cf0000;
+  color: white;
+}
+
+.skip-button-on {
+  background-color: #cf0000;
+  color: white;
+  font-size: 1.1rem;
+}
+
 .button-off {
   pointer-events: none;
   background-color: gray;
   color: white;
+  font-size: 1.1rem;
 }
 
 .input-section {

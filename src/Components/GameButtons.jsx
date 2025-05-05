@@ -8,7 +8,7 @@
             >START
             </button>
             <button
-                className={props.gameStarted ? "button-on" : "button-off"}
+                className={props.gameStarted ? "reset-button-on" : "button-off"}
                 onClick={() => {props.reset();}}
                 style={{width: "8rem", height: "3rem", fontSize: "1.1rem" }}
             >RESET
