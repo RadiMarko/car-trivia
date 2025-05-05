@@ -17,6 +17,11 @@ export default function Input(props) {
         setInputValue("");
     }
     
+    function handleSkipClick(event) {
+        event.target.blur(); // Line to prevent bug when pressing enter or space after clicking skip button
+        handleClick();
+    }
+    
     function handleKeyPress(e) {
         if (e.key === "Enter" && inputValue.trim().length > 0) {
             handleClick();
@@ -26,7 +31,7 @@ export default function Input(props) {
     return (
         <div className="input-section">
             <button className={props.gameStarted ? "skip-button-on" : "button-off"}
-                    onClick={handleClick}
+                    onClick={handleSkipClick}
             >SKIP</button>
             <input className="input-field"
                    value={inputValue}
