@@ -186,7 +186,7 @@ function App() {
   function checkIfEmpty() {
       if (logoArray.length < 1) {
           toggleModal()
-          reset();
+          //reset();
       }
   }
 
@@ -197,7 +197,7 @@ function App() {
       <GameButtons startGame={startGame} gameStarted={gameStarted} pickRandomIndex={pickRandomIndex} reset={reset}></GameButtons>
       <Input gameStarted={gameStarted} onSubmit={compareUserInput}></Input>
       <Footer test={pickRandomIndex} array={logoArray} lastCorrectAnswer={lastCorrectAnswer} gameStarted={gameStarted}></Footer>
-      <Modal modalDisplayed={modalDisplayed} toggleModal={toggleModal}></Modal>
+      <Modal modalDisplayed={modalDisplayed} toggleModal={toggleModal} reset={reset} score={scoreCounter} array={initialArray}></Modal>
     </div>
   )
 }
