@@ -106,3 +106,21 @@ body {
 .modal-off {
   display: none;
 }
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {transform: translateX(0);}
+  10% {transform: translateX(-0.4rem);}
+  20% {transform: translateX(0.4rem);}
+  30% {transform: translateX(-0.4rem);}
+  40% {transform: translateX(0.4rem);}
+  50% {transform: translateX(-0.4rem);}
+  60% {transform: translateX(0.4rem);}
+  70% {transform: translateX(-0.4rem);}
+  80% {transform: translateX(0.4rem);}
+  90% {transform: translateX(-0.4rem);}
+  100% {transform: translateX(0);}
+}

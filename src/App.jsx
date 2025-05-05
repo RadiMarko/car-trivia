@@ -144,6 +144,7 @@ function App() {
           })
       } else {
           setScoreClass("score-counter-wrong")
+          shakeDiv()
       }
 
       setLastCorrectAnswer(() => {
@@ -188,6 +189,15 @@ function App() {
           toggleModal()
           //reset();
       }
+  }
+  
+  // FUNCTION FOR SHAKING EFFECT AT WRONG ANSWER
+  function shakeDiv() {
+      const div = document.querySelector(".logo-display");
+      div.classList.add("shake");
+      setTimeout(() => {
+          div.classList.remove("shake");
+      }, 500)
   }
 
   return (
